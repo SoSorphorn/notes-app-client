@@ -15,13 +15,15 @@ class App extends Component{
     }; 
    }
   async componentDidMount(){
+
     try{
-      if (await Auth.currentSession){
+      const result = await Auth.currentSession();
+      if (result){
         this.userHasAuthenticated(true);
       }
     }catch(e){
       if (e !== 'no user id'){
-        alert(e);
+        // alert(e);
       }
     }
     this.setState({isAuthenticating: false});
@@ -34,6 +36,8 @@ class App extends Component{
   handleLogout = async event => { 
     await Auth.signOut();
     this.userHasAuthenticated(false); 
+    this.setState({isAuthenticated: false});
+    console.log("I am log out", this.state);
     this.props.history.push('/login')
   }
 
@@ -44,11 +48,11 @@ class App extends Component{
       userHasAuthenticated: this.userHasAuthenticated
     };
   
-    
+    console.log(this.state);
     return (
       !this.state.isAuthenticating && <div>
         <Navbar bg="primary" variant="dark">
-          <Navbar.Brand href="#home">Rotati</Navbar.Brand>
+          <Navbar.Brand href="/login">Rotati</Navbar.Brand>
           <Nav className="mr-auto">
           {
             this.state.isAuthenticated
