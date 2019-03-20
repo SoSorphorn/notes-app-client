@@ -10,6 +10,6 @@ export default ({isLoading,
                 disabled = false,
                  ...props}) =>
                             <Button className={`LoaderButton ${className}`} disabled={disabled || isLoading} {...props}>
-                              {isLoading && <i class="glyphicon glyphicon-refresh"></i>}
+                              {isLoading && <i className="glyphicon glyphicon-refresh"></i>}
                               {!isLoading ? text : loadingText}
                             </Button>

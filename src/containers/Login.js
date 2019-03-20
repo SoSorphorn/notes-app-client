@@ -44,26 +44,27 @@ export default class Login extends Component{
 
   render(){
     return(
-      <div className= "App Container">
-        <div className= "row">
-          <div className= "col-md-4"></div>
-          <div className= "col-md-4">
-            <Form onSubmit={this.handleSubmit}>
-              <h3>Login</h3>
-              <Form.Group controlId="email" bssize="large"> 
-                <Form.Label>Email</Form.Label>
-                <Form.Control autoFocus type="email" value={this.state.email} onChange={this.handleChange}/>
-              </Form.Group>
-              <Form.Group controlId="password" bssize="large">
-                <Form.Label> Password </Form.Label>
-                <Form.Control autoFocus type="password" value={this.state.password} onChange={this.handleChange}/>
-              </Form.Group>
-              <LoaderButton block bssize= "large" disabled={!this.validateForm()} type="submit" text= "Login" isLoading={this.state.isLoading} loadingText= " Logging in.........">   
-              </LoaderButton>
-            </Form>
-          </div>
-          <div className= "col-md-4"></div>
-        </div>
+      <div className="Signup">
+        <Form onSubmit={this.handleSubmit}>
+          <h3>Login</h3>
+          <Form.Group controlId="email" bssize="large"> 
+            <Form.Label>Email</Form.Label>
+            <Form.Control autoFocus type="email" value={this.state.email} onChange={this.handleChange}/>
+          </Form.Group>
+          <Form.Group controlId="password" bssize="large">
+            <Form.Label> Password </Form.Label>
+            <Form.Control autoFocus type="password" value={this.state.password} onChange={this.handleChange}/>
+          </Form.Group>
+          <LoaderButton 
+            block 
+            bssize= "large" 
+            disabled={!this.validateForm()} 
+            type="submit" 
+            text= "Login"
+            isLoading={this.state.isLoading} 
+            loadingText= " Logging in.........">   
+          </LoaderButton>
+        </Form>
       </div>
     );
   }
