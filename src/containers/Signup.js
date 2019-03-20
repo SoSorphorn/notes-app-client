@@ -2,6 +2,7 @@ import React ,{Component} from 'react';
 import LoaderButton from '../components/LoaderButton';
 import {Form} from 'react-bootstrap';
 import './Signup.css';
+import { Auth } from 'aws-amplify';
 
 export default class Signup extends Component{
   constructor(props){
@@ -39,14 +40,35 @@ export default class Signup extends Component{
   handleSubmit = async event => {
     event.preventDefault();
     this.setState({ isLoading: true });
-    this.setState({ newUser: "test" });
-    this.setState({ isLoading: false }); 
+    // this.setState({ newUser: "test" });
+    // this.setState({ isLoading: false }); 
+
+    try{
+      const newUser = await Auth.signUp({
+        username: this.state.email,
+        password: this.state.password,
+      });
+      this.setState({newUser});
+    }catch(e){
+      alert(e.message);
+    }
+    this.setState({isLoading: false});
   }
   
 
   handleConfirmationSubmit = async event => { 
     event.preventDefault();
     this.setState({ isLoading: true }); 
+    
+    try{
+      await Auth.confirmSignUp(this.state.email, this.state.confirmationCode);
+      await Auth.signIn(this.state.email, this.state.password);
+      this.props.userHasAuthenticated(true);
+      this.props.history.push('/');
+    }catch (e){
+      alert(e.message);
+      this.setState({isLoading: false});
+    }
   }
 
   renderConfirmationForm(){
