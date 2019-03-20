@@ -1,7 +1,8 @@
 import React , {Component} from 'react';
-import {Form, Button} from 'react-bootstrap';
+import {Form} from 'react-bootstrap';
 import './Login.css';
 import { Auth } from 'aws-amplify' ;
+import LoaderButton from '../components/LoaderButton';
 
 export default class Login extends Component{
   constructor(props){
@@ -25,14 +26,17 @@ export default class Login extends Component{
   }
 
   handleSubmit = async event => { 
+
     event.preventDefault();
-    this.setState({isLoading: false});    
+    this.setState({isLoading: true});  
+
     try {
       await Auth.signIn(this.state.email, this.state.password); 
       this.props.userHasAuthenticated(true); 
       this.props.history.push("/");
     } catch (e) { 
       alert(e.message);
+      this.setState({isLoading: false});
     }
   }
      
@@ -54,10 +58,8 @@ export default class Login extends Component{
                 <Form.Label> Password </Form.Label>
                 <Form.Control autoFocus type="password" value={this.state.password} onChange={this.handleChange}/>
               </Form.Group>
-              <Button block bssize="large" disabled={!this.validateForm()} type="submit">
-                Login 
-              </Button>
-              {/* <LoaderButton block bssize= "large" disabled={!this.validateForm()} type="submit" text= "Login" isLoading={this.state.isLoading} loadingText= "Logged in.........">               </LoaderButton> */}
+              <LoaderButton block bssize= "large" disabled={!this.validateForm()} type="submit" text= "Login" isLoading={this.state.isLoading} loadingText= " Logging in.........">   
+              </LoaderButton>
             </Form>
           </div>
           <div className= "col-md-4"></div>

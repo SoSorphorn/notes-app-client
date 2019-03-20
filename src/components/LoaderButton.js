@@ -1,6 +1,7 @@
 import React from 'react';
-import {Button, Glyphicon} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import './LoaderButton.css';
+require('webpack-icons-installer');
 
 export default ({isLoading, 
                 text, 
@@ -9,7 +10,6 @@ export default ({isLoading,
                 disabled = false,
                  ...props}) =>
                             <Button className={`LoaderButton ${className}`} disabled={disabled || isLoading} {...props}>
-                              {isLoading && <Glyphicon glyph="refresh" className="spinning" />} 
-                              {isLoading && <span><Glyphicon glyph="refresh" className="spinning" /></span> } 
+                              {isLoading && <i class="glyphicon glyphicon-refresh"></i>}
                               {!isLoading ? text : loadingText}
                             </Button>

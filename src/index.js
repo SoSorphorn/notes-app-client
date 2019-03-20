@@ -6,6 +6,7 @@ import App from './App';
 import './index.css';
 import Amplify from 'aws-amplify';
 import config from './config';
+require('webpack-icons-installer');
 
 
 Amplify.configure({ Auth: {
