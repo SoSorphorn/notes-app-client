@@ -1,8 +1,9 @@
 import React ,{Component} from 'react';
 import LoaderButton from '../components/LoaderButton';
 import {Form} from 'react-bootstrap';
-import './Signup.css';
+// import './Signup.css';
 import { Auth } from 'aws-amplify';
+import {Wrapper, FormWrapper, ParagraphWrapper} from '../Style'
 
 export default class Signup extends Component{
   constructor(props){
@@ -40,8 +41,6 @@ export default class Signup extends Component{
   handleSubmit = async event => {
     event.preventDefault();
     this.setState({ isLoading: true });
-    // this.setState({ newUser: "test" });
-    // this.setState({ isLoading: false }); 
 
     try{
       const newUser = await Auth.signUp({
@@ -74,7 +73,7 @@ export default class Signup extends Component{
   renderConfirmationForm(){
     return(
       <div>
-        <Form onSubmit={this.handleConfirmationSubmit}>
+        <FormWrapper onSubmit={this.handleConfirmationSubmit}>
           <Form.Group controlId="confirmationCode" bssize="large">
             <Form.Label> Confirmation Code</Form.Label>
             <Form.Control
@@ -82,7 +81,7 @@ export default class Signup extends Component{
             type="tel"
             value={this.state.confirmationCode}
             onChange={this.handleChange}/>
-            <p> Please check your email for the code</p>
+            <ParagraphWrapper>Please check your email for the code</ParagraphWrapper> 
           </Form.Group>
           <LoaderButton 
             block
@@ -94,13 +93,13 @@ export default class Signup extends Component{
             loadingText= " Verifying........."> 
            >
           </LoaderButton>
-        </Form>
+        </FormWrapper>
       </div>
     );
   }
   renderForm(){
     return(
-      <Form onSubmit={this.handleSubmit}>
+      <FormWrapper onSubmit={this.handleSubmit}>
         <Form.Group controlId="email" bssize="large">
           <Form.Label> Email</Form.Label>
           <Form.Control autoFocus type="email" value={this.state.email} onChange={this.handleChange}/>
@@ -114,14 +113,18 @@ export default class Signup extends Component{
           <Form.Control  type="password" value={this.state.confirmPassword} onChange={this.handleChange}/>
         </Form.Group>
         <LoaderButton block bssize="large" disabled={!this.validateForm()} type="submit" isLoading={this.state.isLoading} text="Signup" loadingText="Signing up..."/>
-      </Form>
+      </FormWrapper>
     )
   }
 
   render(){
     return(
-      <div className="Signup"> {this.state.newUser === null? this.renderForm() : this.renderConfirmationForm()} 
-      </div>
+      <Wrapper>
+        {this.state.newUser === null? this.renderForm() : this.renderConfirmationForm()}
+      </Wrapper>
     );
   }
 }
+
+ 
+

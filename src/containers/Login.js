@@ -1,8 +1,9 @@
 import React , {Component} from 'react';
 import {Form} from 'react-bootstrap';
-import './Login.css';
 import { Auth } from 'aws-amplify' ;
 import LoaderButton from '../components/LoaderButton';
+import {Wrapper, FormWrapper} from '../Style';
+import styled from 'styled-components';
 
 export default class Login extends Component{
   constructor(props){
@@ -39,14 +40,12 @@ export default class Login extends Component{
       this.setState({isLoading: false});
     }
   }
-     
-     
 
   render(){
     return(
-      <div className="Signup">
-        <Form onSubmit={this.handleSubmit}>
-          <h3>Login</h3>
+      <Wrapper>
+        <Header>Login</Header>
+        <FormWrapper onSubmit={this.handleSubmit}>
           <Form.Group controlId="email" bssize="large"> 
             <Form.Label>Email</Form.Label>
             <Form.Control autoFocus type="email" value={this.state.email} onChange={this.handleChange}/>
@@ -64,8 +63,13 @@ export default class Login extends Component{
             isLoading={this.state.isLoading} 
             loadingText= " Logging in.........">   
           </LoaderButton>
-        </Form>
-      </div>
+        </FormWrapper>
+      </Wrapper>
     );
   }
 } 
+
+const Header = styled.h3`
+  margin: 20px;
+  text-align: center; 
+`
