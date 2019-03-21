@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {Navbar,Nav, FormControl, Button, Form, NavItem,} from 'react-bootstrap';
-import './App.css';
+// import './App.css';
 import Routes from './Routes';
 import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
@@ -48,7 +48,7 @@ class App extends Component{
       userHasAuthenticated: this.userHasAuthenticated
     };
   
-    console.log(this.state);
+    // console.log(this.state);
     return (
       !this.state.isAuthenticating && <div>
         <Navbar bg="primary" variant="dark">
@@ -79,5 +79,3 @@ class App extends Component{
 }
 
 export default withRouter(App);
-
- 

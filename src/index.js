@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
-import './index.css';
+// import './index.css';
 import Amplify from 'aws-amplify';
 import config from './config';
 require('webpack-icons-installer');
