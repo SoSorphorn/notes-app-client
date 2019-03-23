@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import {Navbar,Nav, FormControl, Button, Form, NavItem,} from 'react-bootstrap';
-// import './App.css';
 import Routes from './Routes';
 import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
 import {withRouter} from 'react-router-dom';
+// import axios from 'axios';
 
 class App extends Component{
   constructor(props){
@@ -37,7 +37,7 @@ class App extends Component{
     await Auth.signOut();
     this.userHasAuthenticated(false); 
     this.setState({isAuthenticated: false});
-    console.log("I am log out", this.state);
+    // console.log("I am log out", this.state);
     this.props.history.push('/login')
   }
 
@@ -50,6 +50,7 @@ class App extends Component{
   
     // console.log(this.state);
     return (
+      
       !this.state.isAuthenticating && <div>
         <Navbar bg="primary" variant="dark">
           <Navbar.Brand href="/login">Rotati</Navbar.Brand>
@@ -79,3 +80,5 @@ class App extends Component{
 }
 
 export default withRouter(App);
+
+// axios.defaults.withCredentials = true;
