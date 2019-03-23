@@ -4,10 +4,12 @@ import LoaderButton from '../components/LoaderButton';
 import config from '../config';
 import { NoteFormWrapper , NoteWrapper} from '../Style';
 import { API } from "aws-amplify";
+import { s3Upload } from "../libs/awsLib";
 
 export default class NewNote extends Component{   
   constructor(props){
     super(props);
+
     this.file = null;
     this.state = {
       isLoading: null,
@@ -31,27 +33,29 @@ export default class NewNote extends Component{
 
   handleSubmit = async event => { 
     event.preventDefault();
-    if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) { 
+    console.log("New file ", this.file);
+    if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
       alert(`Please pick a file smaller than
-      ${config.MAX_ATTACHMENT_SIZE/1000000} MB.`); 
-      return;
+      ${config.MAX_ATTACHMENT_SIZE/1000000} MB.`); return;
     }
     this.setState({ isLoading: true });
-    console.log(`File: ${this.state.API}`);
     try {
+      const attachment = this.file
+      ? await s3Upload(this.file) : null;
       await this.createNote({
-      content: this.state.content });
-      this.props.history.push('/');
+        attachment,
+        content: this.state.content
+      });
+      this.props.history.push("/"); 
     } catch (e) {
       alert(e);
-        this.setState({isLoading: false});
-    }
+      this.setState({ isLoading: false }); }
   }
 
-  createNote(note){
-    return API.post("notes", "/notes",{
-      body: note
-    });
+  createNote(note) {
+    return API.post("notes", "/notes", {
+        body: note
+      });
   }
 
   render(){
@@ -83,3 +87,6 @@ export default class NewNote extends Component{
     )
   }
 }
+
+
+   
