@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from 'react';
-import {Navbar,Nav, FormControl, Button, Form, NavItem,} from 'react-bootstrap';
+import {Navbar,Nav, NavItem,} from 'react-bootstrap';
 import Routes from './Routes';
 import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
 import {withRouter} from 'react-router-dom';
-// import axios from 'axios';
+import logo from './images/logo.png';
 
 class App extends Component{
   constructor(props){
@@ -37,7 +37,6 @@ class App extends Component{
     await Auth.signOut();
     this.userHasAuthenticated(false); 
     this.setState({isAuthenticated: false});
-    // console.log("I am log out", this.state);
     this.props.history.push('/login')
   }
 
@@ -48,16 +47,19 @@ class App extends Component{
       userHasAuthenticated: this.userHasAuthenticated
     };
   
-    // console.log(this.state);
     return (
       
       !this.state.isAuthenticating && <div>
         <Navbar bg="primary" variant="dark">
-          <Navbar.Brand href="/login">Rotati</Navbar.Brand>
+          <Navbar.Brand href="/login">
+            <img src={logo} alt="Logo" style={{width: "6%"}}/>
+         </Navbar.Brand>
           <Nav className="mr-auto">
           {
             this.state.isAuthenticated
-              ? <NavItem onClick={this.handleLogout} className="nav-link">Logout</NavItem> 
+              ? <NavItem onClick={this.handleLogout} className="nav-link">
+                  <i className="glyphicon glyphicon-log-out"></i>
+                </NavItem> 
               : <Fragment>
                   <LinkContainer to="/signup" className="nav-link"> 
                     <NavItem>Signup</NavItem>
@@ -68,10 +70,10 @@ class App extends Component{
                 </Fragment> 
           } 
           </Nav>
-          <Form inline>
+          {/* <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
             <Button variant="outline-light">Search</Button>
-          </Form>
+          </Form> */}
         </Navbar>
         <Routes childProps={childProps} />
       </div>
@@ -80,5 +82,3 @@ class App extends Component{
 }
 
 export default withRouter(App);
-
-// axios.defaults.withCredentials = true;
