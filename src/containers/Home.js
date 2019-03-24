@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
-// import "./Home.css";
 import {API} from 'aws-amplify';
 
 export default class Home extends Component { 
@@ -45,8 +44,6 @@ export default class Home extends Component {
     return API.get("notes", "/notes");
   }
   renderNotesList(notes) {
-    // console.log(`Notes Content:${notes}`);
-    // debugger
     return [{}].concat(notes).map( (note, i) =>
       i !== 0
       ? <ListGroupItem
@@ -56,6 +53,8 @@ export default class Home extends Component {
         header={note.content.trim().split("\n")[0]}
       >
        <b>{note.content}</b>
+       <br></br>
+       {/* <b>{note.attachment}</b> */}
        <p>{"Created: " + new Date(note.createdAt).toLocaleString()}</p>
       </ListGroupItem> 
     : <ListGroupItem
