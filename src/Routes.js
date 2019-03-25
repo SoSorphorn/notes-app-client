@@ -12,9 +12,6 @@ import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
 export default ({childProps}) => 
   <Switch>
-    {/* <Route path="/" exact component={Home} /> 
-    <Route path="/login" exact component={Login} /> */}
-
     <AuthenticatedRoute path="/" exact component={Home} props={childProps}/>
     <UnauthenticatedRoute path='/login' exact component={Login} props={childProps}/>
     <UnauthenticatedRoute path='/signup' exact component={Sigup} props={childProps}/>
@@ -22,5 +19,6 @@ export default ({childProps}) =>
     <AuthenticatedRoute path="/notes/:id" exact component={Notes} props= {childProps} />
     { /* Finally, catch all unmatched routes */ }
     <Route component={NotFound} />
+    {/* <AppliedRoute path="/" exact component={Home} props={childProps}/> */}
   </Switch>;
   
