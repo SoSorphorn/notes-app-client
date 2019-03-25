@@ -11,8 +11,9 @@ export default class Home extends Component {
 
   renderLander() { 
     return (
-      <div className="lander"> <h1>Scratch</h1>
-        <p>A simple note taking app</p>
+      <div> 
+        <h1 style={{textAlign: "center"}}>Scratch</h1>
+        <p style={{textAlign: "center"}}>A simple note taking app</p>
       </div>
     ); 
   }
