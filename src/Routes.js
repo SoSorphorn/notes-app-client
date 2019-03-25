@@ -18,7 +18,7 @@ export default ({childProps}) =>
     <AuthenticatedRoute path='/notes/new' exact component={NewNote} props={childProps}/>
     <AuthenticatedRoute path="/notes/:id" exact component={Notes} props= {childProps} />
     { /* Finally, catch all unmatched routes */ }
-    <Route component={NotFound} />
+    <Route component={NotFound}/>
     {/* <AppliedRoute path="/" exact component={Home} props={childProps}/> */}
   </Switch>;
   
