@@ -51,7 +51,7 @@ class App extends Component{
       
       !this.state.isAuthenticating && <div>
         <Navbar bg="primary" variant="dark">
-          <Navbar.Brand href="/login">
+          <Navbar.Brand href="/">
             <img src={logo} alt="Logo" style={{width: "6%"}}/>
          </Navbar.Brand>
           <Nav className="mr-auto">

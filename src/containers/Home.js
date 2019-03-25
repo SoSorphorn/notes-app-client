@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { ListGroup, ListGroupItem,NavItem } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import {API} from 'aws-amplify';
 
 export default class Home extends Component { 
@@ -14,6 +15,14 @@ export default class Home extends Component {
       <div> 
         <h1 style={{textAlign: "center"}}>Scratch</h1>
         <p style={{textAlign: "center"}}>A simple note taking app</p>
+          <div style={{paddingTop: 20, textAlign: "center"}}>
+            <LinkContainer to="/login" className="btn btn-primary btn-lg" style={{marginRight: 10}}>
+              <NavItem>Login</NavItem>
+            </LinkContainer>
+            <LinkContainer to="/signup" className="btn btn-primary btn-lg">
+              <NavItem>Signup</NavItem>
+            </LinkContainer>
+          </div>
       </div>
     ); 
   }
@@ -54,8 +63,6 @@ export default class Home extends Component {
         header={note.content.trim().split("\n")[0]}
       >
        <b>{note.content}</b>
-       <br></br>
-       {/* <b>{note.attachment}</b> */}
        <p>{"Created: " + new Date(note.createdAt).toLocaleString()}</p>
       </ListGroupItem> 
     : <ListGroupItem
@@ -74,9 +81,11 @@ export default class Home extends Component {
     event.preventDefault(); 
     this.props.history.push(event.currentTarget.getAttribute("href"));
   }
+ 
   render() { 
     return (
-      <div className="container" style={{paddingTop: 30}}>{this.props.isAuthenticated ? this.renderNotes() : this.renderLander()} 
+      <div className="container" style={{paddingTop: 30}}>
+        {this.props.isAuthenticated ? this.renderNotes() : this.renderLander()} 
       </div>
     ); 
   }
