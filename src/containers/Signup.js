@@ -100,8 +100,9 @@ export default class Signup extends Component{
   renderForm(){
     return(
       <FormWrapper onSubmit={this.handleSubmit}>
+        <h3 style={{textAlign: "center", paddingBottom: 30}}>Register</h3>
         <Form.Group controlId="email" bssize="large">
-          <Form.Label> Email</Form.Label>
+          <Form.Label>Email</Form.Label>
           <Form.Control autoFocus type="email" value={this.state.email} onChange={this.handleChange}/>
         </Form.Group>
         <Form.Group controlId="password" bssize="large">
