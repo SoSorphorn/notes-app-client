@@ -19,9 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "predeploy": "npm run build",
-    "deploy": "aws s3 sync build/ s3://notes-app-client-project --delete",
-    "postdeploy": "aws cloudfront create-invalidation --distribution-id E370DIHHSBMV5R --paths '/*'",
+    "deploy": "aws s3 sync build/ s3://notes-app-client-project",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
