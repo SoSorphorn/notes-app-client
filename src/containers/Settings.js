@@ -42,7 +42,7 @@ export default class Settings extends Component{
   render(){
     return(
       <Wrapper style={{padding: 60,paddingRight: 600,paddingLeft: 600}}>
-        <StripeProvider apiKey="pk_test_1RU2RfqpnddhXGBHt4MQfuXv">
+        <StripeProvider apiKey={config.STRIPE_KEY}>
           <Elements>
             <BillingForm 
               loading={this.state.isLoading}
