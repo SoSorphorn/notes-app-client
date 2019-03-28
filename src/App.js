@@ -57,9 +57,14 @@ class App extends Component{
           <Nav className="mr-auto">
           {
             this.state.isAuthenticated
-              ? <NavItem onClick={this.handleLogout} className="nav-link">
-                  <i className="glyphicon glyphicon-log-out"></i>
-                </NavItem> 
+              ? <Fragment>
+                  <LinkContainer to="/settings" className="nav-link">
+                    <NavItem>Setting</NavItem> 
+                  </LinkContainer>
+                  <NavItem onClick={this.handleLogout} className="nav-link">
+                    <i className="glyphicon glyphicon-log-out"></i>
+                  </NavItem>
+                </Fragment>
               : <Fragment>
                   <LinkContainer to="/signup" className="nav-link"> 
                     <NavItem>Signup</NavItem>

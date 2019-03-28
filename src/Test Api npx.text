@@ -1,0 +1,56 @@
+
+dev
+$ aws cognito-idp sign-up \
+  --region us-east-1 \
+  --client-id rj2i00ltidfkshs94fsdaq1fq \
+  --username phorndeveloper@gmail.com \
+  --password Aws@131097
+
+
+  aws cognito-idp admin-confirm-sign-up \
+  --region us-east-1 \
+  --user-pool-id us-east-1_XkGtM4OEU \
+  --username phorndeveloper@gmail.com 
+
+prod
+$ aws cognito-idp sign-up \
+  --region us-east-1 \
+  --client-id 56medp42uhhiqjpqbgrq4rk6od \
+  --username phorndeveloper@gmail.com \
+  --password Aws@131097
+
+aws cognito-idp admin-confirm-sign-up \
+  --region us-east-1 \
+  --user-pool-id us-east-1_oZ6wXEYDJ \
+  --username phorndeveloper@gmail.com
+
+
+***Test API dev
+npx aws-api-gateway-cli-test \
+--username='phorndeveloper@gmail.com' \
+--password='Aws@131097' \
+--user-pool-id='us-east-1_XkGtM4OEU' \
+--app-client-id='rj2i00ltidfkshs94fsdaq1fq' \
+--cognito-region='us-east-1' \
+--identity-pool-id='us-east-1:27fa10b2-1857-4ca3-a016-9d5cc696ad5a' \
+--invoke-url='https://t43mmjjegj.execute-api.us-east-1.amazonaws.com/dev' \
+--api-gateway-region='us-east-1' \
+--path-template='/notes' \
+--method='POST' \
+--body='{"content":"hello world","attachment":"hello.jpg"}'
+
+***Test API prop
+npx aws-api-gateway-cli-test \
+--username='phorndeveloper@gmail.com' \
+--password='Aws@131097' \
+--user-pool-id='us-east-1_oZ6wXEYDJ' \
+--app-client-id='56medp42uhhiqjpqbgrq4rk6od' \
+--cognito-region='us-east-1' \
+--identity-pool-id='us-east-1:2ec91eb4-e7ea-405d-b39c-341ee99ddfbe' \
+--invoke-url='https://deukzg0ms1.execute-api.us-east-1.amazonaws.com/prod' \
+--api-gateway-region='us-east-1' \
+--path-template='/notes' \
+--method='POST' \
+--body='{"content":"hello world","attachment":"hello.jpg"}'
+
+
