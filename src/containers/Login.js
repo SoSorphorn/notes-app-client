@@ -27,14 +27,11 @@ export default class Login extends Component{
   }
 
   handleSubmit = async event => { 
-
     event.preventDefault();
     this.setState({isLoading: true});  
-
     try {
       await Auth.signIn(this.state.email, this.state.password); 
       this.props.userHasAuthenticated(true); 
-      // this.props.history.push("/");
     } catch (e) { 
       alert(e.message);
       this.setState({isLoading: false});
@@ -54,6 +51,10 @@ export default class Login extends Component{
             <Form.Label> Password </Form.Label>
             <Form.Control autoFocus type="password" value={this.state.password} onChange={this.handleChange}/>
           </Form.Group>
+          <p style={{marginTop: 20}}>
+            <a href='/login/resetPassword'>Forgot Password?</a>
+          </p>
+          <hr></hr>
           <LoaderButton 
             block 
             bssize= "large" 
