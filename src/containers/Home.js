@@ -13,8 +13,8 @@ export default class Home extends Component {
   renderLander() { 
     return (
       <div> 
-        <h1 style={{textAlign: "center"}}>Scratch</h1>
-        <p style={{textAlign: "center"}}>A simple note taking app</p>
+        <h1 style={{textAlign: "center"}}> Rotati Consulting</h1>
+        <p style={{textAlign: "center"}}>Welcome to Rotati</p>
           <div style={{paddingTop: 20, textAlign: "center"}}>
             <LinkContainer to="/login" className="btn btn-primary btn-lg" style={{marginRight: 10}}>
               <NavItem>Login</NavItem>
