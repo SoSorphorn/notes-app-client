@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Form} from 'react-bootstrap';
-import {Wrapper,FormWrapper,ImageForgotPassword} from '../Style';
+import {Wrapper,FormWrapper} from '../Style';
 import logo from '../images/logo.png';
 import LoaderButton from '../components/LoaderButton';
 import {Auth} from 'aws-amplify';
@@ -75,78 +75,85 @@ export default class ResetPassword extends Component{
 
   renderRequestCodeForm() {
     return (
-      <FormWrapper onSubmit={this.handleSendCodeClick}>
-        <Form.Group bssize="large" controlId="email">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            autoFocus
-            type="email"
-            value={this.state.email}
-            onChange={this.handleChange}
+      <Wrapper>
+        <img src={logo} alt="Logo" style={{width: "10%",display:"block",marginLeft: "auto",marginRight: "auto",marginBottom: "20px"}}/>
+        <FormWrapper onSubmit={this.handleSendCodeClick}>
+          <Form.Group bssize="large" controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              autoFocus
+              type="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+          </Form.Group>
+          <LoaderButton
+            block
+            type="submit"
+            bssize="large"
+            loadingText="Sending…"
+            text="Send Confirmation"
+            isLoading={this.state.isSendingCode}
+            disabled={!this.validateCodeForm()}
           />
-        </Form.Group>
-        <LoaderButton
-          block
-          type="submit"
-          bssize="large"
-          loadingText="Sending…"
-          text="Send Confirmation"
-          isLoading={this.state.isSendingCode}
-          disabled={!this.validateCodeForm()}
-        />
-      </FormWrapper>
+        </FormWrapper>
+      </Wrapper>
     );
   }
 
   renderConfirmationForm() {
     return (
-      <FormWrapper onSubmit={this.handleConfirmClick}>
-        <Form.Group bssize="large" controlId="code">
-          <Form.Label>Confirmation Code</Form.Label>
-          <Form.Control
-            autoFocus
-            type="tel"
-            value={this.state.code}
-            onChange={this.handleChange}
+      <Wrapper>
+        <img src={logo} alt="Logo" style={{width: "10%",display:"block",marginLeft: "auto",marginRight: "auto",marginBottom: "20px"}}/>
+        <FormWrapper onSubmit={this.handleConfirmClick}>
+          <Form.Group bssize="large" controlId="code">
+            <Form.Label>Confirmation Code</Form.Label>
+            <Form.Control
+              autoFocus
+              type="tel"
+              value={this.state.code}
+              onChange={this.handleChange}
+            />
+            <p>
+              Please check your email ({this.state.email}) for the confirmation
+              code.
+            </p>
+          </Form.Group>
+          <hr />
+          <Form.Group bssize="large" controlId="password">
+            <Form.Label>New Password</Form.Label>
+            <Form.Control
+              type="password"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+          </Form.Group>
+          <Form.Group bssize="large" controlId="confirmPassword">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              onChange={this.handleChange}
+              value={this.state.confirmPassword}
+            />
+          </Form.Group>
+          <LoaderButton
+            block
+            type="submit"
+            bssize="large"
+            text="Confirm"
+            loadingText="Confirm…"
+            isLoading={this.state.isConfirming}
+            disabled={!this.validateResetForm()}
           />
-          <p>
-            Please check your email ({this.state.email}) for the confirmation
-            code.
-          </p>
-        </Form.Group>
-        <hr />
-        <Form.Group bssize="large" controlId="password">
-          <Form.Label>New Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={this.state.password}
-            onChange={this.handleChange}
-          />
-        </Form.Group>
-        <Form.Group bssize="large" controlId="confirmPassword">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            onChange={this.handleChange}
-            value={this.state.confirmPassword}
-          />
-        </Form.Group>
-        <LoaderButton
-          block
-          type="submit"
-          bssize="large"
-          text="Confirm"
-          loadingText="Confirm…"
-          isLoading={this.state.isConfirming}
-          disabled={!this.validateResetForm()}
-        />
-      </FormWrapper>
+        </FormWrapper>
+      </Wrapper>
     );
   }
 
   renderSuccessMessage() {
     return (
       <Wrapper className="success" style={{margin: 0 ,textAlign: "center"}}>
+        <img src={logo} alt="Logo" style={{width: "10%",display:"block",marginLeft: "auto",marginRight: "auto",marginBottom: "20px"}}/>
         <i className="glyphicon glyphicon-ok" style={{color: "grey",fontSize: 30,marginBottom: 30}}></i>
         <p>Your password has been reset.</p>
         <p>
@@ -169,4 +176,4 @@ export default class ResetPassword extends Component{
       </Wrapper>
     );
   }
-}
+} 
