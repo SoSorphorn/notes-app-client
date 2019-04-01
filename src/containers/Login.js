@@ -2,8 +2,7 @@ import React , {Component} from 'react';
 import {Form} from 'react-bootstrap';
 import { Auth } from 'aws-amplify' ;
 import LoaderButton from '../components/LoaderButton';
-import {Wrapper, FormWrapper} from '../Style';
-import styled from 'styled-components';
+import {Wrapper, FormWrapper, Header} from '../Style';
 
 export default class Login extends Component{
   constructor(props){
@@ -70,7 +69,3 @@ export default class Login extends Component{
   }
 } 
 
-const Header = styled.h3`
-  margin: 20px;
-  text-align: center; 
-`

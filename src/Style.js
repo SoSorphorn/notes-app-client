@@ -41,13 +41,10 @@ const BillingFormWrapper = styled.div`
   border-color: #66AFE9;
 
 `
-const ImageForgotPassword = styled.img`
-  width: 10%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 20px;
+const Header = styled.h3`
+  margin: 20px;
+  text-align: center; 
 `
 
 
-export { ParagraphWrapper, FormWrapper, Wrapper, NoteFormWrapper, NoteFormTextarea , NoteWrapper,SettingWrapper, BillingFormWrapper,ImageForgotPassword};
+export { ParagraphWrapper, FormWrapper, Wrapper, NoteFormWrapper, NoteFormTextarea , NoteWrapper,SettingWrapper, BillingFormWrapper,Header};
