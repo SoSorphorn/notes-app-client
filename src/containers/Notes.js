@@ -105,7 +105,7 @@ export default class Notes extends Component {
               <Form.Control 
                 onChange={this.handleChange} 
                 value={this.state.content} 
-                componentClass="textarea" style={{ height: 300, fontSize: 24}}/>
+                componentclass="textarea" style={{ height: 300, fontSize: 24}}/>
             </FormGroup> 
             {this.state.note.attachment &&
               <FormGroup>
