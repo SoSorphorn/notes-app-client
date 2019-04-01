@@ -35,8 +35,8 @@ export default class NewNote extends Component{
     event.preventDefault();
     console.log("New file ", this.file);
     if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
-      alert(`Please pick a file smaller than
-      ${config.MAX_ATTACHMENT_SIZE/1000000} MB.`); return;
+      alert(`Please pick a file smaller than${config.MAX_ATTACHMENT_SIZE/1000000} MB.`); 
+      return;
     }
     this.setState({ isLoading: true });
     try {
