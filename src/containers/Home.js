@@ -32,6 +32,7 @@ export default class Home extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     this.setState({ notes: nextProps.data});
   }
   renderNotes() { 
@@ -41,7 +42,7 @@ export default class Home extends Component {
         <NewNoteModal handleFetchingNotedList={this.props.handleFetchingNotedList}></NewNoteModal>
         <br></br>
         <ListGroup>
-          {!this.state.isLoading && this.renderNotesList(this.state.notes)}
+          {!this.state.isLoading && this.renderNotesList()}
         </ListGroup> 
       </div>
     ); 
@@ -52,17 +53,22 @@ export default class Home extends Component {
       return; 
     }
     try {
-      this.props.handleFetchingNotedList();
+      await this.props.handleFetchingNotedList();
     } catch (e) { 
       alert(e);
     }
     this.setState({ isLoading: false }); 
   }
 
+  
+
   notes() {
     return API.get("notes", "/notes");
   }
-  renderNotesList(notes) {
+  renderNotesList = () => {
+    // console.log(`Date:${new Date(notes.createdAt).toLocaleString()}`)
+    // console.log("The notes is", this.state);
+    const {notes} = this.state;
     return(
       <Table striped bordered hover >
         <thead>
@@ -73,25 +79,25 @@ export default class Home extends Component {
           </tr>
         </thead>
         <tbody>
-          {[{}].concat(notes).map( (note, i) =>
-            <tr key={i}>
+          {notes.map( (note, i) =>
+            <tr key={note.noteId}>
               <td>{note.content}</td>
               <td>{new Date(note.createdAt).toLocaleString()}</td>
               <td style={{textAlign: "center"}}>
-                <Button  
+                <Button 
                     size="sm" 
                     variant="primary" 
                     style={{marginRight: 20}}
-                    key={note.noteId}
                     href={`/notes/${note.noteId}`} 
                     onClick={this.handleNoteClick}>
                   <i className="glyphicon glyphicon-edit"></i>
                 </Button>
                 <Button 
+                  key={note.noteId}
                   size="sm" 
-                  onClick={this.handleDelete}
+                  onClick={this.handleDelete.bind(this, note.noteId)}
                   variant="danger"
-                  // isLoading={this.state.isDeleting} 
+                  
                 >
                   <i className="glyphicon glyphicon-remove"></i>
                 </Button>
@@ -103,34 +109,32 @@ export default class Home extends Component {
     );
   }
 
-  handleDelete = async event => { 
+  handleDelete = async (id, event) => { 
     event.preventDefault();
     const confirmed = window.confirm(
-      "Are you sure you want to delete this note?"
+      "Are you sure you want to delete this note? "
     );
-    debugger
     if (!confirmed) { 
       return;
     }
-
     this.setState({ isDeleting: true }); 
     try{
-      await this.deleteNote();
-      this.props.history.push('/');
+      await this.deleteNote(id);
+      this.props.handleFetchingNotedList();
     }catch(e){
       this.setState({isDeleting: false});
     }
   }
-  deleteNote() {
-    return API.del("notes", `/notes/${this.props.match.params.id}`);
-    // return API.del("notes", `/notes/{notes.params.id}`);
+  deleteNote(id) {
+    console.log("The id is", id);
+    return API.del("notes", `/notes/${id}`);
   }
 
   handleNoteClick = event => {
     event.preventDefault(); 
     this.props.history.push(event.currentTarget.getAttribute("href"));
   }
- 
+
   render() { 
     return (
       <div className="container" style={{paddingTop: 30}}>

@@ -132,16 +132,6 @@ export default class Notes extends Component {
               text="Save" 
               loadingText="Saving..."
               /> 
-            <LoaderButton
-              block
-              bsstyle="danger"
-              bssize="large" 
-              isLoading={this.state.isDeleting} 
-              onClick={this.handleDelete}
-              text="Delete" 
-              className="btn btn-danger"
-              loadingText="Deleting..."
-            />
           </NoteFormWrapper>
         }
        </NoteWrapper> 
