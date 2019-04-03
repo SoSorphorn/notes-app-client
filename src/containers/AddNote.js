@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import {Form} from 'react-bootstrap';
 import LoaderButton from '../components/LoaderButton';
 import config from '../config';
-import { NoteFormWrapper , NoteWrapper} from '../Style';
+import { NoteFormWrapper } from '../Style';
 import { API } from "aws-amplify";
 import { s3Upload } from "../libs/awsLib";
+import {withRouter} from 'react-router-dom';
 
-export default class NewNote extends Component{   
+class NewNote extends Component{   
   constructor(props){
     super(props);
 
@@ -14,6 +15,7 @@ export default class NewNote extends Component{
     this.state = {
       isLoading: null,
       content: '',
+      show: '',
     }
   }
 
@@ -45,10 +47,19 @@ export default class NewNote extends Component{
         attachment,
         content: this.state.content
       });
-      this.props.history.push("/"); 
+      this.handleClose = this.handleClose.bind(this);
+      this.props.handleClose();
+      this.props.handleFetchingNotedList();
+      this.props.history.push('/');
+      
     } catch (e) {
       alert(e);
-      this.setState({ isLoading: false }); }
+      this.setState({ isLoading: false }); 
+    }
+  }
+
+  handleClose(){
+    this.setState({show: false});
   }
 
   createNote(note) {
@@ -59,14 +70,13 @@ export default class NewNote extends Component{
 
   render(){
     return(
-      <NoteWrapper>
-        <h3>New Note</h3>
+      <div>
         <NoteFormWrapper onSubmit={this.handleSubmit}>
           <Form.Group controlId="content">
             <Form.Control
               onChange={this.handleChange}
               value={this.state.content}
-              componentclass="textarea"  style={{ height: 300, fontSize: 24}}/>
+              componentclass="textarea"  style={{ height: 100, fontSize: 24}}/>
           </Form.Group>
           <Form.Group controlId="file">
             <Form.Label>Attactement</Form.Label>
@@ -82,10 +92,10 @@ export default class NewNote extends Component{
             text="Create"
             loadingText="Creating..."/>
         </NoteFormWrapper>
-      </NoteWrapper>
+      </div>
     )
   }
 }
 
 
-   
+export default withRouter(NewNote);

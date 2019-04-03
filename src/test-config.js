@@ -1,6 +1,7 @@
 export default {
   s3: {
-    REGION: "us-east-1", BUCKET: "notes-app-api-test-deplo-serverlessdeploymentbuck-1p6f52dnzsq77"
+    REGION: "us-east-1", 
+    BUCKET: "notes-app-api-test-deplo-serverlessdeploymentbuck-1p6f52dnzsq77"
   }, 
   apiGateway: {
     REGION: "us-east-1",

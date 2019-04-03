@@ -5,13 +5,15 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
 import {withRouter} from 'react-router-dom';
 import logo from './images/logo.png';
+import {API} from 'aws-amplify';
 
 class App extends Component{
   constructor(props){
     super(props);
     this.state = { 
       isAuthenticated: false, 
-      isAuthenticating: true
+      isAuthenticating: true,
+      data: []
     }; 
    }
   async componentDidMount(){
@@ -32,6 +34,11 @@ class App extends Component{
   userHasAuthenticated = authenticated => { 
     this.setState({ isAuthenticated: authenticated });
   }
+
+  handleFetchingNotedList = async () => {
+    const newData = await API.get("notes", "/notes");
+    this.setState({data: newData});
+  }
   
   handleLogout = async event => { 
     await Auth.signOut();
@@ -44,11 +51,12 @@ class App extends Component{
   render() {
     const childProps = {
       isAuthenticated: this.state.isAuthenticated, 
-      userHasAuthenticated: this.userHasAuthenticated
+      userHasAuthenticated: this.userHasAuthenticated,
+      handleFetchingNotedList: this.handleFetchingNotedList,
+      data: this.state.data
     };
   
     return (
-      
       !this.state.isAuthenticating && <div>
         <Navbar bg="primary" variant="dark">
           <Navbar.Brand href="/">

@@ -1,12 +1,16 @@
 import React, { Component } from "react";
-import { ListGroup, ListGroupItem,NavItem } from "react-bootstrap";
+import { ListGroup,NavItem ,Table,Button} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import {API} from 'aws-amplify';
+import NewNoteModal from '../containers/modals/NewNoteModal';
 
 export default class Home extends Component { 
   constructor(props) {
     super(props);
-    this.state = { isLoading: true, notes: []
+    this.state = { 
+      isLoading: true,
+      notes: [],
+      isDeleting: null,
     }; 
   }
 
@@ -26,10 +30,16 @@ export default class Home extends Component {
       </div>
     ); 
   }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ notes: nextProps.data});
+  }
   renderNotes() { 
     return (
       <div className="notes">
-        <h3>Your Notes</h3> 
+        <h3>Your notes</h3> 
+        <NewNoteModal handleFetchingNotedList={this.props.handleFetchingNotedList}></NewNoteModal>
+        <br></br>
         <ListGroup>
           {!this.state.isLoading && this.renderNotesList(this.state.notes)}
         </ListGroup> 
@@ -42,8 +52,7 @@ export default class Home extends Component {
       return; 
     }
     try {
-      const notes = await this.notes(); 
-      this.setState({ notes });
+      this.props.handleFetchingNotedList();
     } catch (e) { 
       alert(e);
     }
@@ -54,29 +63,69 @@ export default class Home extends Component {
     return API.get("notes", "/notes");
   }
   renderNotesList(notes) {
-    return [{}].concat(notes).map( (note, i) =>
-      i !== 0
-      ? <ListGroupItem
-        key={note.noteId}
-        href={`/notes/${note.noteId}`} 
-        onClick={this.handleNoteClick} 
-        header={note.content.trim().split("\n")[0]}
-      >
-       <b>{note.content}</b>
-       <p>{"Created: " + new Date(note.createdAt).toLocaleString()}</p>
-      </ListGroupItem> 
-    : <ListGroupItem
-      key="new"
-      href="/notes/new" 
-      onClick={this.handleNoteClick}
-      >
-      <h4>
-        <b>{"\uFF0B"}</b> 
-        Create a new note 
-      </h4>
-      </ListGroupItem>
-    ); 
+    return(
+      <Table striped bordered hover >
+        <thead>
+          <tr style={{textAlign: "center"}}>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Setting</th>
+          </tr>
+        </thead>
+        <tbody>
+          {[{}].concat(notes).map( (note, i) =>
+            <tr key={i}>
+              <td>{note.content}</td>
+              <td>{new Date(note.createdAt).toLocaleString()}</td>
+              <td style={{textAlign: "center"}}>
+                <Button  
+                    size="sm" 
+                    variant="primary" 
+                    style={{marginRight: 20}}
+                    key={note.noteId}
+                    href={`/notes/${note.noteId}`} 
+                    onClick={this.handleNoteClick}>
+                  <i className="glyphicon glyphicon-edit"></i>
+                </Button>
+                <Button 
+                  size="sm" 
+                  onClick={this.handleDelete}
+                  variant="danger"
+                  // isLoading={this.state.isDeleting} 
+                >
+                  <i className="glyphicon glyphicon-remove"></i>
+                </Button>
+              </td>
+            </tr>
+          )}
+         </tbody>
+      </Table>
+    );
   }
+
+  handleDelete = async event => { 
+    event.preventDefault();
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this note?"
+    );
+    debugger
+    if (!confirmed) { 
+      return;
+    }
+
+    this.setState({ isDeleting: true }); 
+    try{
+      await this.deleteNote();
+      this.props.history.push('/');
+    }catch(e){
+      this.setState({isDeleting: false});
+    }
+  }
+  deleteNote() {
+    return API.del("notes", `/notes/${this.props.match.params.id}`);
+    // return API.del("notes", `/notes/{notes.params.id}`);
+  }
+
   handleNoteClick = event => {
     event.preventDefault(); 
     this.props.history.push(event.currentTarget.getAttribute("href"));
