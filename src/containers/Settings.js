@@ -41,16 +41,16 @@ export default class Settings extends Component{
 
   render(){
     return(
-      <Wrapper style={{padding: 60,paddingRight: 600,paddingLeft: 600}}>
-        <StripeProvider apiKey={config.STRIPE_KEY}>
-          <Elements>
-            <BillingForm 
-              loading={this.state.isLoading}
-              onSubmit={this.handleFormSubmit}
-            />
-          </Elements>
-        </StripeProvider>
-      </Wrapper>
+        <Wrapper style={{padding: 60,paddingRight: 600,paddingLeft: 600}}>
+          <StripeProvider apiKey={config.STRIPE_KEY}>
+            <Elements>
+              <BillingForm 
+                loading={this.state.isLoading}
+                onSubmit={this.handleFormSubmit}
+              />
+            </Elements>
+          </StripeProvider>
+        </Wrapper>
     );
   }
 } 
