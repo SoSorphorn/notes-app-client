@@ -32,7 +32,6 @@ export default class Home extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     this.setState({ notes: nextProps.data});
   }
   renderNotes() { 
@@ -66,8 +65,6 @@ export default class Home extends Component {
     return API.get("notes", "/notes");
   }
   renderNotesList = () => {
-    // console.log(`Date:${new Date(notes.createdAt).toLocaleString()}`)
-    // console.log("The notes is", this.state);
     const {notes} = this.state;
     return(
       <Table striped bordered hover >
@@ -97,7 +94,6 @@ export default class Home extends Component {
                   size="sm" 
                   onClick={this.handleDelete.bind(this, note.noteId)}
                   variant="danger"
-                  
                 >
                   <i className="glyphicon glyphicon-remove"></i>
                 </Button>
@@ -117,16 +113,13 @@ export default class Home extends Component {
     if (!confirmed) { 
       return;
     }
-    this.setState({ isDeleting: true }); 
     try{
       await this.deleteNote(id);
       this.props.handleFetchingNotedList();
     }catch(e){
-      this.setState({isDeleting: false});
     }
   }
   deleteNote(id) {
-    console.log("The id is", id);
     return API.del("notes", `/notes/${id}`);
   }
 

@@ -56,6 +56,7 @@ export default class Signup extends Component{
   
 
   handleConfirmationSubmit = async event => { 
+   
     event.preventDefault();
     this.setState({ isLoading: true }); 
     
@@ -113,7 +114,13 @@ export default class Signup extends Component{
           <Form.Label> Confirm Password</Form.Label>
           <Form.Control  type="password" value={this.state.confirmPassword} onChange={this.handleChange}/>
         </Form.Group>
-        <LoaderButton block bssize="large" disabled={!this.validateForm()} type="submit" isLoading={this.state.isLoading} text="Signup" loadingText="Signing up..."/>
+        <LoaderButton 
+          block bssize="large" 
+          disabled={!this.validateForm()} 
+          type="submit" 
+          isLoading={this.state.isLoading} 
+          text="Signup" 
+          loadingText="Signing up..."/>
       </FormWrapper>
     )
   }

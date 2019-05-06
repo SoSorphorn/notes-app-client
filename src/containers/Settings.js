@@ -26,6 +26,7 @@ export default class Settings extends Component{
       return; 
     }
     this.setState({ isLoading: true });
+    console.log(`Token: ${token.id}`);
     try {
       await this.billUser({
         storage,
